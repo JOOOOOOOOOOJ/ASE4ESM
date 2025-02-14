@@ -215,7 +215,9 @@ class AEVComputer(torch.nn.Module):
         Returns:
             |aevs|
         """
-        if not (torch.jit.is_scripting() or torch.compiler.is_compiling()):
+        #JO: change
+        if not (torch.jit.is_scripting() or (hasattr(torch.compiler, 'is_compiling') and torch.compiler.is_compiling())):
+        #if not (torch.jit.is_scripting() or torch.compiler.is_compiling()):
             if isinstance(elem_idxs, tuple):
                 warnings.warn(
                     "You seem to be attempting to call "
